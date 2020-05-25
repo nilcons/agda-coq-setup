@@ -9,7 +9,7 @@ We are going to install everything in your home directory, under
 ```
 mkdir -p ~/.agda
 git clone --depth 1 -b v2.6.1 https://github.com/agda/agda.git ~/.agda/src
-stack --stack-yaml ~/.agda/src/stack-8.8.3.yaml install -j2
+stack --stack-yaml ~/.agda/src/stack-8.8.3.yaml install
 stack --stack-yaml ~/.agda/src/stack-8.8.3.yaml clean
 ```
 
