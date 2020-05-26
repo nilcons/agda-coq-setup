@@ -7,8 +7,7 @@
 (package-initialize)
 
 ;; Packages:
-;; proof-general ivy counsel swiper use-package
-;; probably not: amx
+;; proof-general ivy ivy-rich counsel swiper use-package which-key
 
 (use-package counsel
   :after ivy
@@ -39,8 +38,13 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
+(use-package proof-general
+  :custom
+  (proof-splash-enable nil))
 
-(setq proof-splash-enable nil)
+(use-package which-key
+  :config
+  (which-key-mode 1))
 
 ;; Agda
 (load-file (let ((coding-system-for-read 'utf-8))

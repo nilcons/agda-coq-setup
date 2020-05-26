@@ -36,7 +36,7 @@ ENV LC_ALL=C.UTF-8
 
 ARG coq_version=8.11.1
 
-RUN opam init --auto-setup --dot-profile=~/.bashrc --yes --jobs=2 --disable-sandboxing \
+RUN opam init --auto-setup --dot-profile=~/.bashrc --yes --jobs=1 --disable-sandboxing \
         && opam pin --yes add coq ${coq_version} \
         && opam clean -a -c -s --logs
 
@@ -44,13 +44,13 @@ RUN opam init --auto-setup --dot-profile=~/.bashrc --yes --jobs=2 --disable-sand
 ## Agda
 
 ADD agda_install.sh ./
-CMD bash                        #TODO remove
 RUN ./agda_install.sh
 
 ################################################################################
 ## Emacs setup
 
 ADD dot-emacs.el .emacs
-# TODO
+ADD emacs-install-pkgs.sh ./
+RUN ./emacs-install-pkgs.sh
 
 CMD bash

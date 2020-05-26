@@ -20,7 +20,7 @@ stack_setup
 mkdir -p ~/.agda
 cd ~/.agda
 git clone --depth 1 -b "v${agda_version}" https://github.com/agda/agda.git src
-stack --stack-yaml src/stack-"${ghc_version}".yaml install -j2
+stack --stack-yaml src/stack-"${ghc_version}".yaml install -j1
 stack --stack-yaml src/stack-"${ghc_version}".yaml clean
 
 agda-mode compile
