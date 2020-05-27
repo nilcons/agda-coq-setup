@@ -62,3 +62,6 @@ isolation between its clients, so don't give access to it to any
 program you don't trust, even if it's running from an otherwise
 isolated container.  (Not that I'm trying to do anything nefarious
 with this image, it's just important to be aware of this.)
+
+And finally, [test your Emacs/Agda/Coq/Docker setup](setup-emacs.md#testing)
+on example Agda and Coq files.
