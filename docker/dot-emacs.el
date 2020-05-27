@@ -30,7 +30,8 @@
 
 (use-package proof-general
   :custom
-  (proof-splash-enable nil))
+  (proof-splash-enable nil)
+  (coq-accept-proof-using-suggestion 'never))
 
 (use-package which-key
   :config
