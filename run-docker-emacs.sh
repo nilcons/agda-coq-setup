@@ -18,7 +18,7 @@ fi
 if [[ -n "$DISPLAY" ]]; then
     XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
     innner_xauthority=/home/demo/.Xauthority
-    exec docker run -it --rm --network=host --ipc=host --shm-size=4g -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v $XAUTHORITY:$innner_xauthority -v $HOME:$HOME -e DISPLAY -e XAUTHORITY=$innner_xauthority $image bash -i -c emacs
+    exec docker run -it --rm --network=host --ipc=host --shm-size=4g -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v $XAUTHORITY:$innner_xauthority -v $HOME:$HOME -e DISPLAY -e XAUTHORITY=$innner_xauthority $image bash -i -c "emacs $*"
 else
-    exec docker run -it --rm -v $HOME:$HOME -e TERM=xterm-256color $image bash -i -c emacs
+    exec docker run -it --rm -v $HOME:$HOME -e TERM=xterm-256color $image bash -i -c "emacs $*"
 fi
