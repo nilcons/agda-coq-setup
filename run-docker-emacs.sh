@@ -2,7 +2,7 @@
 
 set -eu
 
-cd $(dirname $0)
+cd "$(dirname $0)"
 
 image="agda-coq-$USER"
 
@@ -11,14 +11,14 @@ if ! docker images | grep -q "^$image "; then
 
     export DEMO_UID=$(id -u)
     export DEMO_GID=$(id -g)
-    export WORKDIR=$HOME
+    export WORKDIR="$HOME"
     docker build --build-arg DEMO_UID --build-arg DEMO_GID --build-arg WORKDIR --tag=$image --file docker/Dockerfile.remap docker/
 fi
 
 if [[ -n "$DISPLAY" ]]; then
-    XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
+    XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
     innner_xauthority=/home/demo/.Xauthority
-    exec docker run -it --rm --network=host --ipc=host --shm-size=4g -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v $XAUTHORITY:$innner_xauthority -v $PWD/docker/dot-emacs.el:/home/demo/.emacs -v $HOME:$HOME -e DISPLAY -e XAUTHORITY=$innner_xauthority $image bash -i -c "emacs $*"
+    exec docker run -it --rm --network=host --ipc=host --shm-size=4g -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v "$XAUTHORITY":$innner_xauthority -v "$PWD"/docker/dot-emacs.el:/home/demo/.emacs -v "$HOME:$HOME" -e DISPLAY -e XAUTHORITY=$innner_xauthority $image bash -i -c "emacs -fn mono:size=18 $*"
 else
-    exec docker run -it --rm -v $PWD/docker/dot-emacs.el:/home/demo/.emacs -v $HOME:$HOME -e TERM=xterm-256color $image bash -i -c "emacs $*"
+    exec docker run -it --rm -v "$PWD"/docker/dot-emacs.el:/home/demo/.emacs -v "$HOME:$HOME" -e TERM=xterm-256color $image bash -i -c "emacs $*"
 fi
