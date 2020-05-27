@@ -15,4 +15,4 @@ cat > $HOME/.emacs.d/install-package.el <<EOF
 (mapc 'package-install pkg-to-install)
 EOF
 
-emacs --batch --eval "(defconst pkg-to-install '(proof-general ivy ivy-rich counsel swiper use-package which-key))" -l $HOME/.emacs.d/install-package.el
+emacs --batch --eval "(defconst pkg-to-install '(proof-general ivy counsel swiper use-package which-key))" -l $HOME/.emacs.d/install-package.el
