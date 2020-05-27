@@ -1,6 +1,8 @@
 FROM haskell:8.8.3
 LABEL maintainer="klao@nilcons.com"
 
+CMD bash
+
 RUN apt-get update -q \
         && apt-get install -y -q --no-install-recommends procps less emacs-lucid sudo m4 opam \
         && apt-get clean \
@@ -52,7 +54,3 @@ RUN ./agda_install.sh
 ADD dot-emacs.el .emacs
 ADD emacs-install-pkgs.sh ./
 RUN ./emacs-install-pkgs.sh
-
-################################################################################
-
-CMD bash
