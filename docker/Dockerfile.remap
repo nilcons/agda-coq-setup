@@ -1,0 +1,13 @@
+FROM klao/agda-coq:latest
+
+ARG DEMO_UID
+ARG DEMO_GID
+ARG WORKDIR
+
+USER root
+RUN sed -i -e "/^demo/s/:1000:1000:/:$DEMO_UID:$DEMO_GID:/" /etc/passwd \
+        && sed -i -e "/^demo/s/:1000:/:$DEMO_GID:/" /etc/group \
+        && chown -R $DEMO_UID:$DEMO_GID /home/demo
+
+USER demo
+WORKDIR ${WORKDIR}

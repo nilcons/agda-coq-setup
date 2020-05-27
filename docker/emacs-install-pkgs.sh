@@ -9,7 +9,7 @@ cat > $HOME/.emacs.d/install-package.el <<EOF
 (package-initialize)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; Fix HTTP1/1.1 problems
+;; Fix HTTP/1.1 problems
 (setq url-http-attempt-keepalives nil)
 (package-refresh-contents)
 (mapc 'package-install pkg-to-install)

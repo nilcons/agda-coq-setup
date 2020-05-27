@@ -54,8 +54,5 @@ ADD emacs-install-pkgs.sh ./
 RUN ./emacs-install-pkgs.sh
 
 ################################################################################
-## Helper for uid/gid remapping
-
-ADD --chown=root remap-demo-ids.sh /root/
 
 CMD bash

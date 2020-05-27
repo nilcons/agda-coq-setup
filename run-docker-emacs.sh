@@ -2,35 +2,17 @@
 
 set -eu
 
-build_remapped_image() {
-    DEMO_UID=$1
-    DEMO_GID=$2
-    image=$3
+cd $(dirname $0)
 
-    dir=$(mktemp -d)
-    cat > $dir/Dockerfile <<EOF
-FROM klao/agda-coq:latest
-USER root
-ARG DEMO_UID=$DEMO_UID
-ARG DEMO_GID=$DEMO_GID
-RUN /root/remap-demo-ids.sh
-USER demo
-EOF
-    docker build --tag=agda-coq-$DEMO_UID-$DEMO_GID $dir
-    rm -rf $dir
-}
+image="agda-coq-$USER"
 
+if ! docker images | grep -q "^$image "; then
+    echo "Need to build $image"
 
-image=klao/agda-coq
-
-uid=$(id -u)
-gid=$(id -g)
-if [[ "$uid:$gid" != "1000:1000" ]]; then
-    image="agda-coq-$uid-$gid"
-    if ! docker images | grep -q "^$image "; then
-        echo "Need to build $image"
-        build_remapped_image $uid $gid $image
-    fi
+    export DEMO_UID=$(id -u)
+    export DEMO_GID=$(id -g)
+    export WORKDIR=$HOME
+    docker build --build-arg DEMO_UID --build-arg DEMO_GID --build-arg WORKDIR --tag=$image --file docker/Dockerfile.remap docker/
 fi
 
 if [[ -n "$DISPLAY" ]]; then
@@ -38,5 +20,5 @@ if [[ -n "$DISPLAY" ]]; then
     innner_xauthority=/home/demo/.Xauthority
     exec docker run -it --rm --network=host --ipc=host --shm-size=4g -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v $XAUTHORITY:$innner_xauthority -v $HOME:$HOME -e DISPLAY -e XAUTHORITY=$innner_xauthority $image bash -i -c emacs
 else
-    exec docker run -it --rm -v $HOME:$HOME $image bash -i -c emacs
+    exec docker run -it --rm -v $HOME:$HOME -e TERM=xterm-256color $image bash -i -c emacs
 fi
