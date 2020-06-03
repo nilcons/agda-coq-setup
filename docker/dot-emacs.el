@@ -6,8 +6,7 @@
 
 (package-initialize)
 
-;; Packages:
-;; proof-general ivy counsel swiper use-package which-key
+;; Packages: see emacs-install-packages.sh
 
 (use-package counsel
   :after ivy
@@ -37,7 +36,12 @@
   :config
   (which-key-mode 1))
 
+(use-package haskell-mode
+  :hook (haskell-mode . interactive-haskell-mode))
+
+;; Better defaults:
 (setq inhibit-startup-screen t)
+(windmove-default-keybindings)
 
 ;; Agda
 (load-file (let ((coding-system-for-read 'utf-8))
